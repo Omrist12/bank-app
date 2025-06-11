@@ -1,0 +1,62 @@
+const express = require('express');
+const router = express.Router();
+
+// In memory user store
+const users = [];
+
+// POST /signup route to handle user registration
+router.post('/', (req, res) => {
+    const { email, password, phone } = req.body;
+
+    // Basic validation
+    if (!email || !password || !phone) {
+        return res.status(400).json({ message: 'Email, password, and phone are required' });
+    }
+
+    // Email checks
+    // Check if user already exists
+    const existingUser = users.find(user => user.email === email);
+    if (existingUser) {
+        return res.status(400).json({ message: 'User already exists' });
+    }
+
+    // Email format validation (simple regex)
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        return res.status(400).json({ message: 'Invalid email format' });
+    }
+
+    // Password checks
+    // Check password length (at least 8 characters)
+    if (password.length < 8) {
+        return res.status(400).json({ message: 'Password must be at least 8 characters long' });
+    }
+
+    // Check password complexity (at least one uppercase, one lowercase, one digit)
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+    if (!passwordRegex.test(password)) {
+        return res.status(400).json({ message: 'Password must contain at least one uppercase letter, one lowercase letter, and one digit' });
+    }
+
+    // Phone number checks
+    // Check phone number format (simple regex)
+    const phoneRegex = /^\+?[1-9]\d{1,14}$/; // E.164 format
+    if (!phoneRegex.test(phone)) {
+        return res.status(400).json({ message: 'Invalid phone number format' });
+    }
+
+    // Check phone number length
+    if (phone.length < 9 || phone.length > 15) {
+        return res.status(400).json({ message: 'Phone number must be between 9 and 15 digits' });
+    }
+
+    // End of checks 
+    // Create new user
+    const newUser = { email, password, phone };
+    users.push(newUser);
+
+    // Respond with success message
+    res.status(200).json({ message: 'User registered successfully' });
+});
+
+module.exports = router;
