@@ -78,4 +78,4 @@ router.post("/", (req, res) => {
 });
 
 // Export the router
-module.exports = { router, verificationCodes };
+module.exports = { router, verificationCodes, users };
