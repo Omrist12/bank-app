@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 
@@ -15,6 +16,7 @@ app.use(express.json());
 const { router: signupRoute } = require("./routes/signup");
 const verifyRoute = require("./routes/verify");
 const loginRoute = require("./routes/login");
+// const authenticateToken = require("./middleware/authMiddleware");
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/signup", signupRoute);
 app.use("/verify", verifyRoute);
