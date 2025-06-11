@@ -14,9 +14,11 @@ app.use(express.json());
 // Routes
 const { router: signupRoute } = require("./routes/signup");
 const verifyRoute = require("./routes/verify");
+const loginRoute = require("./routes/login");
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/signup", signupRoute);
 app.use("/verify", verifyRoute);
+app.use("/login", loginRoute);
 
 // Test route
 app.get("/", (req, res) => {
