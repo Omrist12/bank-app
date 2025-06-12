@@ -7,7 +7,7 @@ const verificationCodes = new Map();
 
 // POST /signup route to handle user registration
 router.post("/", (req, res) => {
-  const { email, password, phone } = req.body;
+  const { email, password, phone, balance, useRandomBalance } = req.body;
 
   // Basic validation
   if (!email || !password || !phone) {
@@ -60,9 +60,26 @@ router.post("/", (req, res) => {
       .json({ message: "Phone number must be between 9 and 15 digits" });
   }
 
+  //Balance checks
+  let initialBalance;
+
+  // If user requests random balance or doesn’t provide one
+  if (useRandomBalance || balance === undefined) {
+    initialBalance = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000; // random between 1000 and 9999
+  } else {
+    // Validate manual balance
+    const parsedBalance = parseFloat(balance);
+    if (isNaN(parsedBalance) || parsedBalance < 0) {
+      return res
+        .status(400)
+        .json({ message: "Balance must be a valid non-negative number" });
+    }
+    initialBalance = parsedBalance;
+  }
+
   // End of checks
   // Create new user
-  const newUser = { email, password, phone };
+  const newUser = { email, password, phone, balance: initialBalance };
   users.push(newUser);
 
   // Send verification code
