@@ -13,7 +13,7 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-const { router: signupRoute } = require("./routes/signup");
+const signupRoute = require("./routes/signup");
 const verifyRoute = require("./routes/verify");
 const loginRoute = require("./routes/login");
 const dashboardRoute = require("./routes/dashboard");
