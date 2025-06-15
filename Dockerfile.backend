@@ -1,0 +1,18 @@
+# Use Node.js LTS base image
+FROM node:18
+
+# Set working directory inside the container
+WORKDIR /app
+
+# Copy backend files
+COPY ./backend ./backend
+WORKDIR /app/backend
+
+# Install backend dependencies
+RUN npm install
+
+# Expose port (same as in server.js or .env)
+EXPOSE 5000
+
+# Start backend server
+CMD ["node", "server.js"]
