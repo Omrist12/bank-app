@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // ← Add this
 
 const Signup = () => {
+  const navigate = useNavigate(); // ← Hook for redirection
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -38,6 +41,11 @@ const Signup = () => {
 
       if (res.ok) {
         setMessage(data.message);
+
+        // Redirect to verify page with email
+        navigate("/verify", { state: { email: formData.email } });
+
+        // Optionally reset the form here
         setFormData({
           email: "",
           password: "",
