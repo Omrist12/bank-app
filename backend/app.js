@@ -18,11 +18,13 @@ const verifyRoute = require("./routes/verify");
 const loginRoute = require("./routes/login");
 const dashboardRoute = require("./routes/dashboard");
 const authenticateToken = require("./middleware/authMiddleware");
+const transactionRoutes = require("./routes/transactions");
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/signup", signupRoute);
 app.use("/verify", verifyRoute);
 app.use("/login", loginRoute);
 app.use("/dashboard", dashboardRoute);
+app.use("/transactions", transactionRoutes);
 
 // Test route
 app.get("/", (req, res) => {
