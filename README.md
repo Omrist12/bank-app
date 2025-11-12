@@ -18,3 +18,6 @@ A fullstack banking web application built with React, Node.js, and MongoDB.
 - Database: MongoDB with Mongoose
 - Testing: Jest, Supertest, Cypress
 - DevOps: Docker, Swagger
+
+
+# This project is for learning, it was stopped prior to making the react components in the front due to work on open-source projects
